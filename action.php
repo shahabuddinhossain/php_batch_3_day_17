@@ -21,12 +21,19 @@ if(isset($_GET['pages']))
     } elseif($_GET['pages'] == 'blog')
     {
         $blog = new Blog();
-        $blogs = $blog->getAllBlogs();
+        $blogs = $blog->getBlogs();
 
         /*echo "<pre>";
         print_r($blogs);*/
         include "pages/blog.php";
-    } elseif ($_GET['pages'] == 'product')
+    }elseif($_GET['pages'] == 'all-blogs')
+    {
+        $blog  = new Blog();
+        $allBlogs = $blog->getAllBlogs();
+        include "pages/allBlogs.php";
+    }
+
+    elseif ($_GET['pages'] == 'product')
     {
         if (isset($_GET['id']))
         {
@@ -89,6 +96,13 @@ elseif (isset($_POST['btn']))
     $newPassword = $passwordGenerator->newPassword() ;
 
     include "pages/password-reset.php";
+
+}
+elseif (isset($_POST['blog_btn']))
+{
+    $blog   =   new Blog($_POST);
+    $messages = $blog->index();
+    include "pages/home.php";
 
 }
 elseif (isset($_POST['img_btn']))
